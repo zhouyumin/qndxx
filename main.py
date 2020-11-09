@@ -19,9 +19,14 @@ def get_target():
     res = requests.get(url, headers=header)
     res.encoding = res.apparent_encoding
     soup = bs4.BeautifulSoup(res.text, "html.parser")
-    div = soup.find("div", class_="slideBox")
+    divs = soup.find("div", class_="slideBox")
+    a = divs.find_all("a")
     global target
-    target = div.a['href']
+    for each in a:
+        if each["href"].find("daxuexi") != -1:
+            target = each["href"]
+            break
+
     print('find url:' + target)
 
 
